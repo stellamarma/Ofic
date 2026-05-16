@@ -7,18 +7,18 @@
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="0" class="logo-item">ΟΦΙC</el-menu-item>
+    <el-menu-item index="home" class="logo-item">ΟΦΙC</el-menu-item>
 
     <div class="right-menu">
-      <el-menu-item index="2-1">Άρθρα</el-menu-item>
-      <el-menu-item index="2-2">Αφιερώματα</el-menu-item>
-      <el-menu-item index="2-3">Δημοσίευση</el-menu-item>
+      <el-menu-item index="articles">Άρθρα</el-menu-item>
+      <el-menu-item index="tributes">Αφιερώματα</el-menu-item>
+      <el-menu-item index="publish">Θεατρικά</el-menu-item>
     </div>
   </el-menu>
 
   <!-- 2. ΜΕΝΟΥ ΓΙΑ ΚΙΝΗΤΑ (Φαίνεται μόνο σε μικρές οθόνες) -->
   <div class="mobile-menu-bar mobile-only">
-    <div class="mobile-logo">ΟΦΙC</div>
+    <div class="mobile-logo" @click="handleSelect('home')">ΟΦΙC</div>
     <!-- Κουμπί Burger για άνοιγμα του μενού -->
     <el-button class="burger-btn" @click="drawer = true" link>
       <span class="burger-icon">☰</span>
@@ -38,9 +38,9 @@
       mode="vertical"
       @select="handleMobileSelect"
     >
-      <el-menu-item index="2-1">Άρθρα</el-menu-item>
-      <el-menu-item index="2-2">Αφιερώματα</el-menu-item>
-      <el-menu-item index="2-3">Δημοσίευση</el-menu-item>
+      <el-menu-item index="articles">Άρθρα</el-menu-item>
+      <el-menu-item index="tributes">Αφιερώματα</el-menu-item>
+      <el-menu-item index="theater">Θεατρικά</el-menu-item>
     </el-menu>
   </el-drawer>
 </template>
@@ -48,16 +48,19 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-const activeIndex = ref('0')
-const drawer = ref(false) // Ελέγχει αν είναι ανοιχτό το μενού στο κινητό
+const activeIndex = ref('home')
+const drawer = ref(false)
 
-const handleSelect = (key: string, keyPath: string[]) => {
-  console.log('selected:', key, keyPath)
+// Ορίζουμε το emit για να στέλνουμε την επιλογή στο App.vue
+const emit = defineEmits(['menu-change'])
+
+const handleSelect = (key: string) => {
+  activeIndex.value = key
+  emit('menu-change', key) // Ενημερώνει το App.vue ποια σελίδα να δείξει
 }
 
-// Κλείνει το drawer όταν ο χρήστης επιλέγει κάτι στο κινητό
-const handleMobileSelect = (key: string, keyPath: string[]) => {
-  handleSelect(key, keyPath)
+const handleMobileSelect = (key: string) => {
+  handleSelect(key)
   drawer.value = false 
 }
 </script>
@@ -78,20 +81,20 @@ const handleMobileSelect = (key: string, keyPath: string[]) => {
   align-items: center;
 }
 
-/* Σωστή στόχευση για το Logo αντί για το index="0" που μπορεί να μπερδέψει */
 .logo-item {
   font-family: 'GFS Jackson', serif !important;
   font-size: 28px !important; 
   font-weight: bold;
+  cursor: pointer;
 }
 
 :deep(.el-sub-menu__title) {
   font-size: 20px !important; 
 }
 
-/* --- MOBILE MENU BAR (Η μπάρα που φαίνεται μόνο στο κινητό) --- */
+/* --- MOBILE MENU BAR (Η μπάρα για το κινητό) --- */
 .mobile-menu-bar {
-  display: none; /* Κρυφό από προεπιλογή (υπολογιστές) */
+  display: none; /* Κρυφό σε desktop */
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
@@ -104,6 +107,7 @@ const handleMobileSelect = (key: string, keyPath: string[]) => {
   font-family: 'GFS Jackson', serif;
   font-size: 26px;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .burger-btn {
@@ -111,22 +115,20 @@ const handleMobileSelect = (key: string, keyPath: string[]) => {
   color: #000000;
 }
 
-/* Στυλ για το κάθετο μενού μέσα στο Drawer του κινητού */
+/* Στυλ για το μενού μέσα στο Drawer του κινητού */
 :deep(.el-drawer__body) .el-menu-item {
   font-size: 20px;
   height: 55px;
 }
 
-/* --- MEDIA QUERIES (Το μαγικό κομμάτι για την εναλλαγή οθονών) --- */
-
-/* Για οθόνες μικρότερες από 768px (Κινητά) */
+/* --- MEDIA QUERIES για την εναλλαγή οθονών --- */
 @media (max-width: 767px) {
   .desktop-menu {
-    display: none !important; /* Κρύβει το μεγάλο οριζόντιο μενού */
+    display: none !important; /* Κρύβει το μεγάλο μενού */
   }
   
   .mobile-menu-bar {
-    display: flex !important; /* Εμφανίζει τη μπάρα με το burger */
+    display: flex !important; /* Εμφανίζει το burger μενού */
   }
 }
 </style>
