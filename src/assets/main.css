@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'GFS Jackson';
+  src: url('@/assets/fonts.css') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Εφαρμογή της γραμματοσειράς σε όλο το site */
+body {
+  font-family: 'GFS Jackson', serif;
+}
