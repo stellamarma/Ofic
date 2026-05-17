@@ -18,10 +18,10 @@
     <hr class="separator" />
 
     <div v-if="article.images && article.images.length > 0" class="article-slideshow-container">
+      <!-- Αφαιρέθηκε το height="850px" για να ελέγχεται δυναμικά από τη CSS -->
       <el-carousel 
         :interval="5000" 
         arrow="always" 
-        height="850px" 
         indicator-position="outside"
         class="custom-carousel"
       >
@@ -79,7 +79,7 @@ defineEmits(['select', 'back'])
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   animation: fadeIn 0.4s ease-out;
-  max-width: 1200px; /* Ανοίξαμε το πλάτος για να υποστηρίξει το μεγάλο ύψος */
+  max-width: 1200px;
   margin: 0 auto;
   height: auto; 
   overflow: visible;
@@ -113,7 +113,7 @@ defineEmits(['select', 'back'])
 }
 
 /* ==========================================================================
-   --- ΣΤΥΛ ΓΙΑ ΤΟ SLIDESHOW (Αναλογίες Α1 Έντονα Κάθετο) ---
+   --- ΣΤΥΛ ΓΙΑ ΤΟ SLIDESHOW (Αναλογίες Α1 Δυναμικά σε κάθε οθόνη) ---
    ========================================================================== */
 .article-slideshow-container {
   margin-bottom: 70px; 
@@ -122,7 +122,29 @@ defineEmits(['select', 'back'])
   background-color: #f4f6f8; 
   border: 1px solid #e2e8f0;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  padding: 30px 0; /* Περισσότερος αέρας για να ξεχωρίζει το έγγραφο */
+  padding: 20px; /* Ομοιόμορφο εσωτερικό περιθώριο */
+  
+  /* Περιορίζει το μέγιστο πλάτος στο desktop ώστε να μην κρύβει όλη την οθόνη λόγω του ύψους του Α1 */
+  max-width: 600px; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Επιβολή αναλογίας Α1 (1 πλάτος προς 1.414 ύψος) στο Carousel */
+.custom-carousel {
+  width: 100%;
+  height: auto !important; /* Ακυρώνει τα inline στυλ που βάζει το Element Plus */
+  aspect-ratio: 1 / 1.414; /* Σταθερή αναλογία ISO χαρτιού (Α1, Α2, Α3, Α4 κλπ) */
+}
+
+/* Αναγκάζει το εσωτερικό viewport του Element Plus να ακολουθήσει το aspect-ratio */
+.custom-carousel :deep(.el-carousel__container) {
+  height: 100% !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .slide-wrapper {
@@ -134,20 +156,20 @@ defineEmits(['select', 'back'])
 }
 
 .slide-image {
-  max-width: 95%; 
-  max-height: 100%;
-  object-fit: contain; /* Εμφανίζει 100% ολόκληρη την Α1 σελίδα χωρίς καμία περικοπή */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); /* Πιο βαθιά σκιά για μεγάλο έγγραφο */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Γεμίζει το Α1 πλαίσιο ομοιόμορφα χωρίς κενά (letterboxing) */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1); 
   border-radius: 6px;
 }
 
-/* Βέλη Element Plus */
+/* Βέλη Element Plus (Πιο μαζεμένα για να μην κρύβουν το περιεχόμενο) */
 .custom-carousel :deep(.el-carousel__arrow) {
   background-color: rgba(52, 152, 219, 0.8);
   color: white;
-  width: 55px;
-  height: 55px;
-  font-size: 1.6rem;
+  width: 45px;
+  height: 45px;
+  font-size: 1.4rem;
 }
 .custom-carousel :deep(.el-carousel__arrow:hover) {
   background-color: rgba(52, 152, 219, 1);
@@ -212,10 +234,22 @@ defineEmits(['select', 'back'])
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Ρυθμίσεις για Κινητά */
+/* ==========================================================================
+   --- RESPONSIVE ΡΥΘΜΙΣΕΙΣ (Κινητά & Tablet) ---
+   ========================================================================== */
 @media (max-width: 768px) {
   .full-article-title { font-size: 1.8rem; }
-  .custom-carousel { height: 500px !important; } /* Προσαρμογή ύψους για φορητές συσκευές */
-  .article-slideshow-container { margin-bottom: 40px; }
+  
+  .article-slideshow-container { 
+    margin-bottom: 40px; 
+    padding: 10px; /* Λιγότερο padding στα κινητά για εξοικονόμηση χώρου */
+  }
+  
+  /* Μίκρεμα στα βέλη πλοήγησης για να μην ενοχλούν στην αφή */
+  .custom-carousel :deep(.el-carousel__arrow) {
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
 }
 </style>
