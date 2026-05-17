@@ -1,19 +1,15 @@
 <template>
   <el-config-provider>
-    <!-- Το κεντρικό μενού εμφανίζεται ΜΟΝΟ ΜΙΑ ΦΟΡΑ στην κορυφή της σελίδας -->
     <Menu @menu-change="changeView" />
     
-    <div class="space-between">
+    <div :class="['space-between', { 'theater-wide': currentView === 'theater' }]">
       
-      <!-- ΑΡΧΙΚΗ ΣΕΛΙΔΑ: Εμφανίζεται μόνο αν το currentView είναι 'home' -->
       <div v-if="currentView === 'home'" class="page-container">
         <Title />
       </div>
 
-      <!-- ΣΕΛΙΔΑ ΑΡΘΡΩΝ: Εμφανίζεται μόνο αν το currentView είναι 'articles' -->
       <div v-if="currentView === 'articles'" class="page-container articles-container">
         
-        <!-- ΚΑΤΑΣΤΑΣΗ 1: Αν ΔΕΝ έχει επιλεγεί άρθρο, δείξε τη λίστα με τα κουτάκια -->
         <div v-if="!selectedArticle">
           <h1 class="greek-title">Όλα τα Άρθρα</h1>
           <ArticleCard 
@@ -24,7 +20,6 @@
           />
         </div>
 
-        <!-- ΚΑΤΑΣΤΑΣΗ 2: Αν ΥΠΑΡΧΕΙ επιλεγμένο άρθρο, δείξε ΜΟΝΟ αυτό σε Full View -->
         <div v-else>
           <ArticleCard 
             :article="selectedArticle" 
@@ -35,22 +30,13 @@
 
       </div>
 
-      <!-- ΣΕΛΙΔΑ ΑΦΙΕΡΩΜΑΤΩΝ: Εμφανίζεται μόνο αν το currentView είναι 'tributes' -->
       <div v-if="currentView === 'tributes'" class="page-container">
         <h1 class="greek-title">Αφιερώματα</h1>
         <p class="placeholder-text">Το περιεχόμενο για τα αφιερώματα θα προστεθεί σύντομα...</p>
       </div>
 
-      <!-- ΣΕΛΙΔΑ ΔΗΜΟΣΙΕΥΣΗΣ: Εμφανίζεται μόνο αν το currentView είναι 'publish' -->
-      <div v-if="currentView === 'publish'" class="page-container">
-        <h1 class="greek-title">Δημοσίευση</h1>
-        <p class="placeholder-text">Φόρμα υποβολής νέου άρθρου...</p>
-      </div>
-
-      <!-- ΣΕΛΙΔΑ ΘΕΑΤΡΙΚΩΝ (για το κινητό): Εμφανίζεται αν το currentView είναι 'theater' -->
       <div v-if="currentView === 'theater'" class="page-container">
-        <h1 class="greek-title">Θεατρικά</h1>
-        <p class="placeholder-text">Το περιεχόμενο για τα θεατρικά...</p>
+        <TheatricalShow :show="myTheatrics[0]" />
       </div>
 
     </div>
@@ -64,8 +50,12 @@ import Title from "./components/Home.vue"
 import ArticleCard from "./components/ArticleCard.vue"
 import { ElConfigProvider } from "element-plus"
 
-// ΕΔΩ ΚΑΝΟΥΜΕ IMPORT ΤΑ ΑΡΘΡΑ ΜΑΣ
-import { articlesData } from './data/articles' // Σιγουρέψου για το σωστό path του αρχείου
+// 1. Σωστό import του νέου component
+import TheatricalShow from './components/TheatricalShow.vue'
+
+// 2. ΕΔΩ ΚΑΝΟΥΜΕ IMPORT ΤΑ ΔΕΔΟΜΕΝΑ ΜΑΣ ΑΠΟ ΤΑ ΞΕΧΩΡΙΣΤΑ ΑΡΧΕΙΑ
+import { articlesData } from './data/articles'
+import { theatricoData } from './data/theatrico' // Εισαγωγή από το νέο σου αρχείο
 
 const currentView = ref('home')
 const selectedArticle = ref<any>(null)
@@ -75,8 +65,9 @@ const changeView = (viewName: string) => {
   selectedArticle.value = null // Μηδενίζουμε το επιλεγμένο άρθρο όταν αλλάζουμε σελίδα
 }
 
-// Περνάμε τα δεδομένα του αρχείου στη reactive μεταβλητή της Vue
+// Περνάμε τα δεδομένα των αρχείων στις reactive μεταβλητές της Vue
 const myArticles = ref(articlesData)
+const myTheatrics = ref(theatricoData)
 </script>
 
 <style scoped>
@@ -92,10 +83,16 @@ const myArticles = ref(articlesData)
 
 .space-between {
   margin-top: 24px;
-  max-width: 800px;
+  max-width: 800px; /* Βασικό πλάτος για την αρχική και τα άρθρα */
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px;
+  transition: max-width 0.3s ease; /* Ομαλή αλλαγή μεγέθους όταν αλλάζει η σελίδα */
+}
+
+/* Όταν βλέπουμε τα θεατρικά, μεγαλώνουμε το container για να απλώσουν σωστά οι εικόνες A1 */
+.space-between.theater-wide {
+  max-width: 1200px;
 }
 
 .page-container {
