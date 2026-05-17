@@ -36,7 +36,9 @@
       </div>
 
       <div v-if="currentView === 'theater'" class="page-container">
-        <TheatricalShow :show="myTheatrics[0]" />
+        <!-- Προσθήκη v-if για να σιγουρέψουμε ότι το myTheatrics[0] δεν είναι undefined -->
+        <TheatricalShow v-if="myTheatrics[0]" :show="myTheatrics[0]" />
+        <p v-else class="placeholder-text">Δεν βρέθηκαν θεατρικές παραστάσεις...</p>
       </div>
 
     </div>
