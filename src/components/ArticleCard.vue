@@ -4,7 +4,7 @@
     
     <!-- Το κουμπί εμφανίζεται ΜΟΝΟ αν το viewMode ΔΕΝ είναι 'home' -->
     <el-button v-if="viewMode !== 'home'" class="back-btn" @click="$emit('back')" link>
-      ← Επιστροφή στα άρθρα
+      Επιστροφή στα άρθρα
     </el-button>
 
     <div class="full-article-header">
@@ -90,12 +90,9 @@ defineEmits(['select', 'back'])
   margin: 0 auto;
   height: auto; 
   overflow: visible;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
-/* 
-  ΔΙΟΡΘΩΣΗ: Μειώσαμε το padding κάτω από 60px σε 30px 
-  για να έρθουν τα άρθρα πιο κοντά μεταξύ τους.
-*/
 .article-full-view.flat-style {
   background: transparent !important;
   box-shadow: none !important;
@@ -112,6 +109,7 @@ defineEmits(['select', 'back'])
   font-size: 1.1rem !important;
   color: #3498db !important;
   margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .full-article-title {
@@ -119,6 +117,7 @@ defineEmits(['select', 'back'])
   color: #1a202c;
   margin: 10px 0;
   line-height: 1.2;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .article-meta {
@@ -126,20 +125,21 @@ defineEmits(['select', 'back'])
   gap: 25px;
   font-size: 0.95rem;
   color: #718096;
-  margin-bottom: 15px; /* Από 20px σε 15px */
+  margin-bottom: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .separator {
   border: 0;
   border-top: 2px solid #f1f5f9;
-  margin: 20px 0; /* Από 30px σε 20px */
+  margin: 20px 0;
 }
 
 /* ==========================================================================
    --- ΣΤΥΛ ΓΙΑ ΤΟ SLIDESHOW ---
    ========================================================================== */
 .article-slideshow-container {
-  margin-bottom: 35px; /* Μειώθηκε στο μισό (από 70px σε 35px) */
+  margin-bottom: 35px;
   border-radius: 16px;
   overflow: hidden;
   background-color: #f4f6f8; 
@@ -191,23 +191,24 @@ defineEmits(['select', 'back'])
    --- ΣΤΥΛ ΚΕΙΜΕΝΟΥ ---
    ========================================================================== */
 .full-article-body {
-  font-family: 'Georgia', serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   max-width: 850px;
   margin: 0 auto;
   height: auto;
   clear: both; 
-  margin-top: 15px; /* Από 20px σε 15px */
-  margin-bottom: 20px; /* Από 60px σε 20px */
+  margin-top: 15px; 
+  margin-bottom: 20px; 
 }
 
 .article-text {
   color: #2d3748;
   line-height: 1.9;
-  font-size: 1.2rem;
+  font-size: 1.15rem; 
   white-space: pre-line; 
   text-align: justify;
   margin: 0;
-  padding-bottom: 10px; /* Από 50px σε 10px */
+  padding-bottom: 10px; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 /* ==========================================================================
@@ -217,6 +218,7 @@ defineEmits(['select', 'back'])
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .mode-list {
@@ -232,6 +234,7 @@ defineEmits(['select', 'back'])
   font-size: 1.6rem;
   color: #2c3e50;
   margin: 10px 0 5px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .article-category {
@@ -243,12 +246,14 @@ defineEmits(['select', 'back'])
   font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .article-footer {
   margin-top: 8px;
   color: #3498db;
   font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 @keyframes fadeIn {
@@ -260,12 +265,17 @@ defineEmits(['select', 'back'])
    --- RESPONSIVE ΡΥΘΜΙΣΕΙΣ ---
    ========================================================================== */
 @media (max-width: 768px) {
-  .full-article-title { font-size: 1.8rem; }
-  .mode-list .article-title { font-size: 1.4rem; }
+  .full-article-title { font-size: 1.8rem !important; }
+  .mode-list .article-title { font-size: 1.4rem !important; }
   
   .article-slideshow-container { 
     margin-bottom: 25px; 
     padding: 10px; 
   }
+}
+
+/* Καθαρίζουμε όλους τους τίτλους αυτού του αρχείου */
+h1 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 </style>

@@ -88,6 +88,26 @@ const myTheatrics = ref(theatricoData)
 </script>
 
 <style scoped>
+/* Το desktop ΟΦΙC παίρνει τη βυζαντινή γραμματοσειρά */
+.logo-item {
+  font-family: 'GFS Jackson', serif !important;
+  font-size: 32px !important; 
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Το mobile ΟΦΙC παίρνει τη βυζαντινή γραμματοσειρά */
+.mobile-logo {
+  font-family: 'GFS Jackson', serif !important;
+  font-size: 30px !important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Τα υπόλοιπα στοιχεία του μενού παραμένουν με την κανονική γραμματοσειρά */
+.el-menu-item, :deep(.el-sub-menu__title) {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
 .greek-title {
   font-family: 'GFS Jackson', serif;
   font-size: 2.5rem;
@@ -147,5 +167,8 @@ const myTheatrics = ref(theatricoData)
     opacity: 1; 
     transform: translateY(0); 
   }
+}
+h1, p {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 </style>

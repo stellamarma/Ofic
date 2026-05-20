@@ -1,6 +1,7 @@
 @font-face {
   font-family: 'GFS Jackson';
-  src: url('@/assets/fonts.css') format('opentype');
+  /* Δοκίμασε με τελεία μπροστά, ώστε να ψάξει σχετικά με το CSS αρχείο */
+  src: url('./font.ttf') format('truetype'); 
   font-weight: normal;
   font-style: normal;
 }
