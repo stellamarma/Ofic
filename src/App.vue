@@ -168,7 +168,7 @@ const myTheatrics = ref(theatricoData)
     transform: translateY(0); 
   }
 }
-h1, p {
+h1, p, h2 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 </style>
