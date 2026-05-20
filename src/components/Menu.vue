@@ -68,13 +68,43 @@ const handleMobileSelect = (key: string) => {
   font-style: normal;
 }
 
+/* --- ΑΛΛΑΓΗ ΧΡΩΜΑΤΟΣ ΓΙΑ ELEMENT PLUS --- */
+/* Εδώ αλλάζουμε το φόντο στο desktop μενού και στα κουμπιά του */
 .el-menu-demo {
   display: flex;
   align-items: center;
   --el-menu-item-font-size: 25px; 
   --el-menu-item-height: 70px;    
   --el-menu-sub-item-height: 60px; 
+  background-color: var(--brand-color) !important; /* Φόντο Desktop Μενού */
 }
+
+.el-menu-demo .el-menu-item {
+  background-color: transparent !important; /* Για να μην έχουν λευκό background τα κουμπιά */
+}
+
+/* Αλλαγή φόντου στο Mobile Μπαράκι */
+.mobile-menu-bar {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  border-bottom: 1px solid var(--el-border-color-light);
+  background-color: var(--brand-color) !important; /* Φόντο Mobile Bar */
+}
+
+/* Αλλαγή φόντου στο Mobile Drawer (το πλαϊνό που ανοίγει) */
+:deep(.el-drawer) {
+  background-color: var(--brand-color) !important;
+}
+:deep(.el-drawer) .el-menu {
+  background-color: transparent !important;
+}
+:deep(.el-drawer) .el-menu-item {
+  background-color: transparent !important;
+}
+/* ---------------------------------------- */
 
 /* 1. Εδώ ΕΞΑΝΑΓΚΑΖΟΥΜΕ το δεξί μενού να έχει ΚΑΝΟΝΙΚΗ γραμματοσειρά */
 .right-menu, 
@@ -98,16 +128,6 @@ const handleMobileSelect = (key: string) => {
 
 :deep(.el-sub-menu__title) {
   font-size: 20px !important; 
-}
-
-.mobile-menu-bar {
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  height: 60px;
-  border-bottom: 1px solid var(--el-border-color-light);
-  background-color: #ffffff;
 }
 
 /* 3. Εφαρμογή ΜΟΝΟ στο mobile λογότυπο ΟΦΙC */
