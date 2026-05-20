@@ -49,8 +49,9 @@
 
       <!-- TRIBUTES VIEW -->
       <div v-if="currentView === 'tributes'" class="page-container">
-        <h1 class="greek-title">Αφιερώματα</h1>
-        <p class="placeholder-text">Το περιεχόμενο για τα αφιερώματα θα προστεθεί σύντομα...</p>
+        <h1 class="greek-title">Αγρίμι</h1>
+        <!-- Εδώ συνδέσαμε σωστά το event με τη νέα συνάρτηση handleRedirect -->
+        <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
       <!-- THEATER VIEW -->
@@ -72,6 +73,9 @@ import ArticleCard from "./components/ArticleCard.vue"
 import { ElConfigProvider } from "element-plus"
 import TheatricalShow from './components/TheatricalShow.vue'
 
+// Εισαγωγή του νέου component Agrini
+import Agrini from './components/Agrini.vue'
+
 import { articlesData } from './data/articles'
 import { theatricoData } from './data/theatrico'
 
@@ -81,6 +85,12 @@ const selectedArticle = ref<any>(null)
 const changeView = (viewName: string) => {
   currentView.value = viewName
   selectedArticle.value = null 
+}
+
+// ─── ΝΕΑ ΣΥΝΑΡΤΗΣΗ Η ΑΠΟΙΑ ΕΛΕΓΧΕΙ ΤΗΝ ΑΝΑΚΑΤΕΥΘΥΝΣΗ ───
+const handleRedirect = () => {
+  currentView.value = 'theater'
+  selectedArticle.value = null
 }
 
 const myArticles = ref(articlesData)
