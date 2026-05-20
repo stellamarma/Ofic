@@ -4,10 +4,25 @@
     
     <div :class="['space-between', { 'theater-wide': currentView === 'theater' }]">
       
+      <!-- HOME PAGE VIEW (Όλα τα άρθρα ανοιχτά) -->
       <div v-if="currentView === 'home'" class="page-container">
         <Title />
+        
+        <h2 class="section-title">Πρόσφατα Άρθρα</h2>
+        
+        <!-- Εδώ τα άρθρα έχουν :isFullView="true" για να φαίνονται ήδη ανοιχτά -->
+        <div class="home-full-articles-list">
+          <ArticleCard 
+            v-for="item in myArticles" 
+            :key="item.id" 
+            :article="item"
+            :isFullView="true"
+            viewMode="home"
+          />
+        </div>
       </div>
 
+      <!-- ARTICLES MENU VIEW (Λίστα που ανοίγει με κλικ) -->
       <div v-if="currentView === 'articles'" class="page-container articles-container">
         
         <div v-if="!selectedArticle">
@@ -16,11 +31,13 @@
             v-for="item in myArticles" 
             :key="item.id" 
             :article="item" 
+            viewMode="list"
             @select="selectedArticle = item" 
           />
         </div>
 
-        <div v-else>
+        <!-- Προσθήκη v-if="selectedArticle" για να μην κρασάρει όταν είναι null -->
+        <div v-else-if="selectedArticle">
           <ArticleCard 
             :article="selectedArticle" 
             :isFullView="true" 
@@ -30,11 +47,13 @@
 
       </div>
 
+      <!-- TRIBUTES VIEW -->
       <div v-if="currentView === 'tributes'" class="page-container">
         <h1 class="greek-title">Αφιερώματα</h1>
         <p class="placeholder-text">Το περιεχόμενο για τα αφιερώματα θα προστεθεί σύντομα...</p>
       </div>
 
+      <!-- THEATER VIEW -->
       <div v-if="currentView === 'theater'" class="page-container">
         <!-- Προσθήκη v-if για να σιγουρέψουμε ότι το myTheatrics[0] δεν είναι undefined -->
         <TheatricalShow v-if="myTheatrics[0]" :show="myTheatrics[0]" />
@@ -51,23 +70,19 @@ import Menu from "./components/Menu.vue"
 import Title from "./components/Home.vue"
 import ArticleCard from "./components/ArticleCard.vue"
 import { ElConfigProvider } from "element-plus"
-
-// 1. Σωστό import του νέου component
 import TheatricalShow from './components/TheatricalShow.vue'
 
-// 2. ΕΔΩ ΚΑΝΟΥΜΕ IMPORT ΤΑ ΔΕΔΟΜΕΝΑ ΜΑΣ ΑΠΟ ΤΑ ΞΕΧΩΡΙΣΤΑ ΑΡΧΕΙΑ
 import { articlesData } from './data/articles'
-import { theatricoData } from './data/theatrico' // Εισαγωγή από το νέο σου αρχείο
+import { theatricoData } from './data/theatrico'
 
 const currentView = ref('home')
 const selectedArticle = ref<any>(null)
 
 const changeView = (viewName: string) => {
   currentView.value = viewName
-  selectedArticle.value = null // Μηδενίζουμε το επιλεγμένο άρθρο όταν αλλάζουμε σελίδα
+  selectedArticle.value = null 
 }
 
-// Περνάμε τα δεδομένα των αρχείων στις reactive μεταβλητές της Vue
 const myArticles = ref(articlesData)
 const myTheatrics = ref(theatricoData)
 </script>
@@ -83,22 +98,36 @@ const myTheatrics = ref(theatricoData)
   text-align: left;
 }
 
+.section-title {
+  font-family: 'GFS Jackson', serif;
+  font-size: 1.8rem;
+  color: #2c3e50;
+  text-align: left;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+/* Κενό ανάμεσα στα ολόκληρα άρθρα της αρχικής σελίδας */
+.home-full-articles-list > :deep(.article-full-view) {
+  margin-bottom: 40px;
+}
+
 .space-between {
   margin-top: 24px;
-  max-width: 800px; /* Βασικό πλάτος για την αρχική και τα άρθρα */
+  max-width: 800px; 
   margin-left: auto;
   margin-right: auto;
   padding: 0 20px;
-  transition: max-width 0.3s ease; /* Ομαλή αλλαγή μεγέθους όταν αλλάζει η σελίδα */
+  transition: max-width 0.3s ease; 
 }
 
-/* Όταν βλέπουμε τα θεατρικά, μεγαλώνουμε το container για να απλώσουν σωστά οι εικόνες A1 */
 .space-between.theater-wide {
   max-width: 1200px;
 }
 
 .page-container {
-  /* Smooth εμφάνιση κάθε φορά που αλλάζει η σελίδα */
   animation: fadeIn 0.4s ease-out;
 }
 
@@ -109,7 +138,6 @@ const myTheatrics = ref(theatricoData)
   text-align: left;
 }
 
-/* Εφέ Animation για την εναλλαγή των σελίδων */
 @keyframes fadeIn {
   from { 
     opacity: 0; 

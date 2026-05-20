@@ -61,7 +61,6 @@ const handleMobileSelect = (key: string) => {
 </script>
 
 <style scoped>
-/* (Τα CSS στυλ σας παραμένουν ως έχουν) */
 .el-menu-demo {
   display: flex;
   align-items: center;
