@@ -13,7 +13,7 @@
     <div class="poem-container">
       <div>
         <p class="poem-text">
-          Ο <span class="gfs-small-center">ΟΦΙC</span> αποτελεί έναν διαδικτυακό χώρο αφιερωμένο στην ιατρική γνώση, την επιστημονική τεκμηρίωση και την εκπαιδευτική προσέγγιση της σύγχρονης και ιστορικής ιατρικής.
+          Ο <span class="gfs-small-center">ΟΦΙC</span> είναι ένα Ιατροφιλοσοφικό Βήμα
         </p>
       </div>
     </div>

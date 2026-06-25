@@ -4,13 +4,16 @@
     
     <div :class="['space-between', { 'theater-wide': currentView === 'theater' }]">
       
-      <!-- HOME PAGE VIEW (Όλα τα άρθρα ανοιχτά) -->
       <div v-if="currentView === 'home'" class="page-container">
         <Title />
         
+        <div class="home-agrini-section">
+          <h2 class="section-title">Αγρίμι</h2>
+          <Agrini @redirect-to-theater="handleRedirect" />
+        </div>
+        
         <h2 class="section-title">Πρόσφατα Άρθρα</h2>
         
-        <!-- Εδώ τα άρθρα έχουν :isFullView="true" για να φαίνονται ήδη ανοιχτά -->
         <div class="home-full-articles-list">
           <ArticleCard 
             v-for="item in myArticles" 
@@ -22,7 +25,6 @@
         </div>
       </div>
 
-      <!-- ARTICLES MENU VIEW (Λίστα που ανοίγει με κλικ) -->
       <div v-if="currentView === 'articles'" class="page-container articles-container">
         
         <div v-if="!selectedArticle">
@@ -36,7 +38,6 @@
           />
         </div>
 
-        <!-- Προσθήκη v-if="selectedArticle" για να μην κρασάρει όταν είναι null -->
         <div v-else-if="selectedArticle">
           <ArticleCard 
             :article="selectedArticle" 
@@ -47,16 +48,12 @@
 
       </div>
 
-      <!-- TRIBUTES VIEW -->
       <div v-if="currentView === 'tributes'" class="page-container">
         <h1 class="greek-title">Αγρίμι</h1>
-        <!-- Εδώ συνδέσαμε σωστά το event με τη νέα συνάρτηση handleRedirect -->
         <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
-      <!-- THEATER VIEW -->
       <div v-if="currentView === 'theater'" class="page-container">
-        <!-- Προσθήκη v-if για να σιγουρέψουμε ότι το myTheatrics[0] δεν είναι undefined -->
         <TheatricalShow v-if="myTheatrics[0]" :show="myTheatrics[0]" />
         <p v-else class="placeholder-text">Δεν βρέθηκαν θεατρικές παραστάσεις...</p>
       </div>
@@ -141,6 +138,12 @@ const myTheatrics = ref(theatricoData)
 
 /* Κενό ανάμεσα στα ολόκληρα άρθρα της αρχικής σελίδας */
 .home-full-articles-list > :deep(.article-full-view) {
+  margin-bottom: 40px;
+}
+
+/* Περιθώριο για το Agrini στην αρχική σελίδα */
+.home-agrini-section {
+  margin-top: 20px;
   margin-bottom: 40px;
 }
 
