@@ -1,12 +1,7 @@
 <template>
-  <!-- Πλήρης Προβολή Άρθρου -->
-  <div v-if="isFullView" :class="['article-full-view', { 'flat-style': viewMode === 'home' }]">
+  <!-- Πλέον εμφανίζεται ΜΟΝΟ η Πλήρης Προβολή Άρθρου απευθείας, με flat-style εμφάνιση -->
+  <div class="article-full-view flat-style">
     
-    <!-- Το κουμπί εμφανίζεται ΜΟΝΟ αν το viewMode ΔΕΝ είναι 'home' -->
-    <el-button v-if="viewMode !== 'home'" class="back-btn" @click="$emit('back')" link>
-      Επιστροφή στα άρθρα
-    </el-button>
-
     <div class="full-article-header">
       <span class="article-category">{{ article.category }}</span>
       <h1 class="full-article-title">{{ article.title }}</h1>
@@ -19,6 +14,7 @@
     
     <hr class="separator" />
 
+    <!-- Slideshow Φωτογραφιών -->
     <div v-if="article.images && article.images.length > 0" class="article-slideshow-container">
       <el-carousel 
         :interval="5000" 
@@ -34,23 +30,9 @@
       </el-carousel>
     </div>
 
+    <!-- Το κείμενο εμφανίζεται ΠΑΝΤΑ κατευθείαν -->
     <div class="full-article-body">
       <p class="article-text">{{ article.content }}</p>
-    </div>
-  </div>
-
-  <!-- Προεπισκόπηση Άρθρου (Λίστα στο μενού «Άρθρα») -->
-  <div 
-    v-else
-    class="article-preview mode-list"
-    @click="$emit('select')"
-  >
-    <div class="article-header">
-      <span class="article-category">{{ article.category }}</span>
-      <h2 class="article-title">{{ article.title }}</h2>
-    </div>
-    <div class="article-footer">
-      <small>Διαβάστε το άρθρο →</small>
     </div>
   </div>
 </template>
@@ -65,10 +47,13 @@ defineProps({
     type: Boolean,
     default: false
   },
+  hideContent: {
+    type: Boolean,
+    default: false
+  },
   viewMode: {
     type: String,
-    default: 'list',
-    validator: (value: string) => ['list', 'home'].includes(value)
+    default: 'list'
   }
 })
 
@@ -81,35 +66,20 @@ defineEmits(['select', 'back'])
    ========================================================================== */
 .article-full-view {
   text-align: left;
-  background: #ffffff;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  animation: fadeIn 0.4s ease-out;
-  max-width: 1200px;
-  margin: 0 auto;
-  height: auto; 
-  overflow: visible;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-}
-
-.article-full-view.flat-style {
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
   padding: 15px 0 30px 0; 
   border-bottom: 2px solid #f1f5f9; 
+  max-width: 1200px;
+  margin: 0 auto;
+  height: auto; 
+  overflow: visible;
 }
 
-.flat-style:last-child {
+.article-full-view:last-child {
   border-bottom: none;
-}
-
-.back-btn {
-  font-size: 1.1rem !important;
-  color: #3498db !important;
-  margin-bottom: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .full-article-title {
@@ -211,32 +181,6 @@ defineEmits(['select', 'back'])
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
-/* ==========================================================================
-   --- ΣΤΥΛ ΠΡΟΕΠΙΣΚΟΠΗΣΗΣ ---
-   ========================================================================== */
-.article-preview {
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-}
-
-.mode-list {
-  padding: 20px 0;
-  margin: 0;
-  border-bottom: 1px solid #e2e8f0; 
-  background: transparent;
-}
-.mode-list:hover .article-title {
-  color: #3498db;
-}
-.mode-list .article-title {
-  font-size: 1.6rem;
-  color: #2c3e50;
-  margin: 10px 0 5px 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-}
-
 .article-category {
   display: inline-block;
   background-color: #ebf8ff;
@@ -246,13 +190,6 @@ defineEmits(['select', 'back'])
   font-size: 0.8rem;
   font-weight: bold;
   text-transform: uppercase;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-}
-
-.article-footer {
-  margin-top: 8px;
-  color: #3498db;
-  font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
@@ -266,7 +203,6 @@ defineEmits(['select', 'back'])
    ========================================================================== */
 @media (max-width: 768px) {
   .full-article-title { font-size: 1.8rem !important; }
-  .mode-list .article-title { font-size: 1.4rem !important; }
   
   .article-slideshow-container { 
     margin-bottom: 25px; 
@@ -274,7 +210,6 @@ defineEmits(['select', 'back'])
   }
 }
 
-/* Καθαρίζουμε όλους τους τίτλους αυτού του αρχείου */
 h1 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }

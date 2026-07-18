@@ -9,8 +9,8 @@
     <el-menu-item index="home" class="logo-item">ΟΦΙC</el-menu-item>
 
     <div class="right-menu">
-      <el-menu-item index="articles">Άρθρα</el-menu-item>
-      <el-menu-item index="tributes">Αγρίμι</el-menu-item>
+      <el-menu-item index="articles">Ιατρικά</el-menu-item>
+      <el-menu-item index="tributes">Φιλοσοφικά</el-menu-item>
       <el-menu-item index="theater">Θεατρικά</el-menu-item> 
     </div>
   </el-menu>
@@ -34,8 +34,8 @@
       mode="vertical"
       @select="handleMobileSelect"
     >
-      <el-menu-item index="articles">Άρθρα</el-menu-item>
-      <el-menu-item index="tributes">Αγρίμι</el-menu-item>
+      <el-menu-item index="articles">Ιατρικά</el-menu-item>
+      <el-menu-item index="tributes">Φιλοσοφικά</el-menu-item>
       <el-menu-item index="theater">Θεατρικά</el-menu-item>
     </el-menu>
   </el-drawer>

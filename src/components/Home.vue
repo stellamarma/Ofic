@@ -9,14 +9,7 @@
       <span class="poem-author">— Ιπποκράτης</span>
     </div>
 
-    <!-- Το Κυρίως Κείμενο -->
-    <div class="poem-container">
-      <div>
-        <p class="poem-text">
-          Ο <span class="gfs-small-center">ΟΦΙC</span> είναι ένα Ιατροφιλοσοφικό Βήμα
-        </p>
-      </div>
-    </div>
+
     
     <!-- Η Εικόνα στο Κάτω Μέρος (Responsive) -->
     <div class="image-wrapper">

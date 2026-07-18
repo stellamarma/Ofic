@@ -4,55 +4,44 @@
     
     <div :class="['space-between', { 'theater-wide': currentView === 'theater' }]">
       
+      <!-- ΑΡΧΙΚΗ ΣΕΛΙΔΑ -->
       <div v-if="currentView === 'home'" class="page-container">
         <Title />
-        
-        <div class="home-agrini-section">
-          <h2 class="section-title">Αγρίμι</h2>
-          <Agrini @redirect-to-theater="handleRedirect" />
-        </div>
-        
-        <h2 class="section-title">Πρόσφατα Άρθρα</h2>
-        
-        <div class="home-full-articles-list">
-          <ArticleCard 
-            v-for="item in myArticles" 
-            :key="item.id" 
-            :article="item"
-            :isFullView="true"
-            viewMode="home"
-          />
-        </div>
       </div>
 
+      <!-- ΜΕΝΟΥ: ΑΡΘΡΑ -->
       <div v-if="currentView === 'articles'" class="page-container articles-container">
         
+        <!-- Λίστα Όλων των Άρθρων -->
         <div v-if="!selectedArticle">
           <h1 class="greek-title">Όλα τα Άρθρα</h1>
           <ArticleCard 
             v-for="item in myArticles" 
             :key="item.id" 
             :article="item" 
-            viewMode="list"
             @select="selectedArticle = item" 
           />
         </div>
 
+        <!-- Πλήρης Προβολή Επιλεγμένου Άρθρου -->
         <div v-else-if="selectedArticle">
           <ArticleCard 
             :article="selectedArticle" 
             :isFullView="true" 
+            :hideContent="false" 
             @back="selectedArticle = null" 
           />
         </div>
 
       </div>
 
+      <!-- ΑΦΙΕΡΩΜΑΤΑ (ΑΓΡΙΜΙ) -->
       <div v-if="currentView === 'tributes'" class="page-container">
         <h1 class="greek-title">Αγρίμι</h1>
         <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
+      <!-- ΘΕΑΤΡΟ -->
       <div v-if="currentView === 'theater'" class="page-container">
         <TheatricalShow v-if="myTheatrics[0]" :show="myTheatrics[0]" />
         <p v-else class="placeholder-text">Δεν βρέθηκαν θεατρικές παραστάσεις...</p>
@@ -69,8 +58,6 @@ import Title from "./components/Home.vue"
 import ArticleCard from "./components/ArticleCard.vue"
 import { ElConfigProvider } from "element-plus"
 import TheatricalShow from './components/TheatricalShow.vue'
-
-// Εισαγωγή του νέου component Agrini
 import Agrini from './components/Agrini.vue'
 
 import { articlesData } from './data/articles'
@@ -84,7 +71,6 @@ const changeView = (viewName: string) => {
   selectedArticle.value = null 
 }
 
-// ─── ΝΕΑ ΣΥΝΑΡΤΗΣΗ Η ΑΠΟΙΑ ΕΛΕΓΧΕΙ ΤΗΝ ΑΝΑΚΑΤΕΥΘΥΝΣΗ ───
 const handleRedirect = () => {
   currentView.value = 'theater'
   selectedArticle.value = null
@@ -95,7 +81,6 @@ const myTheatrics = ref(theatricoData)
 </script>
 
 <style scoped>
-/* Το desktop ΟΦΙC παίρνει τη βυζαντινή γραμματοσειρά */
 .logo-item {
   font-family: 'GFS Jackson', serif !important;
   font-size: 32px !important; 
@@ -103,7 +88,6 @@ const myTheatrics = ref(theatricoData)
   cursor: pointer;
 }
 
-/* Το mobile ΟΦΙC παίρνει τη βυζαντινή γραμματοσειρά */
 .mobile-logo {
   font-family: 'GFS Jackson', serif !important;
   font-size: 30px !important;
@@ -111,10 +95,10 @@ const myTheatrics = ref(theatricoData)
   cursor: pointer;
 }
 
-/* Τα υπόλοιπα στοιχεία του μενού παραμένουν με την κανονική γραμματοσειρά */
 .el-menu-item, :deep(.el-sub-menu__title) {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
+
 .greek-title {
   font-family: 'GFS Jackson', serif;
   font-size: 2.5rem;
@@ -123,28 +107,6 @@ const myTheatrics = ref(theatricoData)
   margin-bottom: 20px;
   color: #2c3e50;
   text-align: left;
-}
-
-.section-title {
-  font-family: 'GFS Jackson', serif;
-  font-size: 1.8rem;
-  color: #2c3e50;
-  text-align: left;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 8px;
-}
-
-/* Κενό ανάμεσα στα ολόκληρα άρθρα της αρχικής σελίδας */
-.home-full-articles-list > :deep(.article-full-view) {
-  margin-bottom: 40px;
-}
-
-/* Περιθώριο για το Agrini στην αρχική σελίδα */
-.home-agrini-section {
-  margin-top: 20px;
-  margin-bottom: 40px;
 }
 
 .space-between {
@@ -181,6 +143,7 @@ const myTheatrics = ref(theatricoData)
     transform: translateY(0); 
   }
 }
+
 h1, p, h2 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
