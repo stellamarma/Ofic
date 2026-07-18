@@ -14,7 +14,7 @@
         
         <!-- Λίστα Όλων των Άρθρων -->
         <div v-if="!selectedArticle">
-          <h1 class="greek-title">Όλα τα Άρθρα</h1>
+          <h1 class="greek-title">Ιατρικά Θέματα</h1>
           <ArticleCard 
             v-for="item in myArticles" 
             :key="item.id" 

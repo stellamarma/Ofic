@@ -1,9 +1,8 @@
 <template>
-  <!-- Πλέον εμφανίζεται ΜΟΝΟ η Πλήρης Προβολή Άρθρου απευθείας, με flat-style εμφάνιση -->
   <div class="article-full-view flat-style">
     
+    <!-- Κύριος Τίτλος Άρθρου -->
     <div class="full-article-header">
-      <span class="article-category">{{ article.category }}</span>
       <h1 class="full-article-title">{{ article.title }}</h1>
       
       <div class="article-meta">
@@ -14,7 +13,7 @@
     
     <hr class="separator" />
 
-    <!-- Slideshow Φωτογραφιών -->
+    <!-- Slideshow Φωτογραφιών Κύριου Άρθρου -->
     <div v-if="article.images && article.images.length > 0" class="article-slideshow-container">
       <el-carousel 
         :interval="5000" 
@@ -22,7 +21,7 @@
         indicator-position="outside"
         class="custom-carousel"
       >
-        <el-carousel-item v-for="(imgUrl, index) in article.images" :key="index">
+        <el-carousel-item v-for="(imgUrl, idx) in article.images" :key="idx">
           <div class="slide-wrapper">
             <img :src="imgUrl" class="slide-image" />
           </div>
@@ -30,9 +29,42 @@
       </el-carousel>
     </div>
 
-    <!-- Το κείμενο εμφανίζεται ΠΑΝΤΑ κατευθείαν -->
+    <!-- Κείμενο και Υποενότητες -->
     <div class="full-article-body">
-      <p class="article-text">{{ article.content }}</p>
+      <p v-if="article.content" class="article-text">{{ article.content }}</p>
+
+      <!-- Εμφάνιση Υποενοτήτων (Οπτική δομή με εσοχή) -->
+      <div v-if="article.subsections && article.subsections.length > 0" class="subsections-container">
+        <div v-for="(sub, subIdx) in article.subsections" :key="subIdx" class="subsection-block">
+          
+          <!-- Τίτλος Υποενότητας (Σαν τον κανονικό τίτλο αλλά μικρότερος) -->
+          <h2 class="subsection-title">{{ sub.title }}</h2>
+          
+          <!-- Meta Υποενότητας -->
+          <div class="article-meta" v-if="sub.date || sub.author">
+            <span v-if="sub.author"><strong>Γράφει ο/η:</strong> {{ sub.author }}</span>
+            <span v-if="sub.date"><strong>Ημερομηνία:</strong> {{ sub.date }}</span>
+          </div>
+
+          <!-- Slideshow Υποενότητας -->
+          <div v-if="sub.images && sub.images.length > 0" class="article-slideshow-container subsection-gallery">
+            <el-carousel 
+              :interval="5000" 
+              :arrow="sub.images.length > 1 ? 'always' : 'never'" 
+              indicator-position="outside"
+              class="custom-carousel"
+            >
+              <el-carousel-item v-for="(imgUrl, imgIdx) in sub.images" :key="imgIdx">
+                <div class="slide-wrapper">
+                  <img :src="imgUrl" class="slide-image" />
+                </div>
+              </el-carousel-item>
+            </el-carousel>
+          </div>
+          
+          <p v-if="sub.content" class="article-text">{{ sub.content }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -70,12 +102,10 @@ defineEmits(['select', 'back'])
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  padding: 15px 0 30px 0; 
+  padding: 15px 0 40px 0; 
   border-bottom: 2px solid #f1f5f9; 
   max-width: 1200px;
   margin: 0 auto;
-  height: auto; 
-  overflow: visible;
 }
 
 .article-full-view:last-child {
@@ -86,8 +116,7 @@ defineEmits(['select', 'back'])
   font-size: 2.4rem;
   color: #1a202c;
   margin: 10px 0;
-  line-height: 1.2;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  line-height: 1.3;
 }
 
 .article-meta {
@@ -96,7 +125,6 @@ defineEmits(['select', 'back'])
   font-size: 0.95rem;
   color: #718096;
   margin-bottom: 15px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .separator {
@@ -121,9 +149,13 @@ defineEmits(['select', 'back'])
   margin-right: auto;
 }
 
+.subsection-gallery {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
 .custom-carousel {
   width: 100%;
-  height: auto !important;
   aspect-ratio: 1 / 1.414; 
 }
 
@@ -158,16 +190,12 @@ defineEmits(['select', 'back'])
 }
 
 /* ==========================================================================
-   --- ΣΤΥΛ ΚΕΙΜΕΝΟΥ ---
+   --- ΣΤΥΛ ΥΠΟΕΝΟΤΗΤΩΝ (ΜΕ ΕΣΩΤΕΡΙΚΗ ΕΣΟΧΗ) ---
    ========================================================================== */
 .full-article-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   max-width: 850px;
   margin: 0 auto;
-  height: auto;
-  clear: both; 
   margin-top: 15px; 
-  margin-bottom: 20px; 
 }
 
 .article-text {
@@ -177,25 +205,24 @@ defineEmits(['select', 'back'])
   white-space: pre-line; 
   text-align: justify;
   margin: 0;
-  padding-bottom: 10px; 
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  padding-bottom: 20px; 
 }
 
-.article-category {
-  display: inline-block;
-  background-color: #ebf8ff;
-  color: #2b6cb0;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+.subsections-container {
+  margin-top: 40px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+.subsection-block {
+  margin-bottom: 45px;
+  padding-left: 30px; /* Σπρώχνει όλη την υποενότητα πιο μέσα για να φαίνεται η ιεραρχία */
+}
+
+.subsection-title {
+  font-size: 1.8rem;
+  color: #1a202c;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 /* ==========================================================================
@@ -203,6 +230,8 @@ defineEmits(['select', 'back'])
    ========================================================================== */
 @media (max-width: 768px) {
   .full-article-title { font-size: 1.8rem !important; }
+  .subsection-title { font-size: 1.4rem !important; }
+  .subsection-block { padding-left: 15px; } /* Μικραίνει η εσοχή στις μικρές οθόνες κινητών */
   
   .article-slideshow-container { 
     margin-bottom: 25px; 
@@ -210,7 +239,7 @@ defineEmits(['select', 'back'])
   }
 }
 
-h1 {
+h1, h2, span, p {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 </style>
