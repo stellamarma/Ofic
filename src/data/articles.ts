@@ -47,5 +47,13 @@ export const articlesData: Article[] = [
     images: ['/Article/nejmoa2200433.jpg'],
     author: 'ΟΦΙΣ',
     date: '22 Σεπτ 2022'
+  },
+    {
+    id: 5,
+    title: '4) Καίριο χτύπημα κατά του μεταστατικού καρκίνου (πανκρέατος)',
+    category: 'Επιστημονικα Θεματα',
+    images: ['/Article/NEJMoa2605555(1)_page-0001.jpg'],
+    author: 'ΟΦΙΣ',
+    date: '13 Ιούλ 2026'
   }
 ];
