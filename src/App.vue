@@ -37,7 +37,7 @@
 
       <!-- ΑΦΙΕΡΩΜΑΤΑ (ΑΓΡΙΜΙ) -->
       <div v-if="currentView === 'tributes'" class="page-container">
-        <h1 class="greek-title">Αγρίμι</h1>
+        <h1 class="greek-title">Τί ἐστιν ἀλήθεια;</h1>
         <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
