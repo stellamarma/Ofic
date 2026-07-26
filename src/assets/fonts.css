@@ -5,18 +5,12 @@
   font-style: normal;
 }
 
-/* Εδώ ορίζεις τη μεταβλητή */
+/* Αυτό κρατάει ΟΛΑ τα άλλα components ΠΡΑΣΙΝΑ */
 :root {
   --brand-color: rgb(197, 224, 174);
 }
 
-/* Αυτό εφαρμόζει τη γραμματοσειρά ΚΑΙ το χρώμα σε όλο το site */
 body {
   font-family: 'MyCustomFont', sans-serif;
-  
-  /* ΑΝ ΘΕΛΕΙΣ το χρώμα να είναι το ΦΟΝΤΟ όλου του site: */
   background-color: var(--brand-color);
-  
-  /* ΑΝ ΘΕΛΕΙΣ το χρώμα να είναι για τα ΓΡΑΜΜΑΤΑ όλου του site, σβήσε το από πάνω και βάλε: */
-  /* color: var(--brand-color); */
 }

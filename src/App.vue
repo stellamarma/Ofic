@@ -35,9 +35,9 @@
 
       </div>
 
-      <!-- ΑΦΙΕΡΩΜΑΤΑ (ΑΓΡΙΜΙ) -->
+      <!-- ΑΦΙΕΡΩΜΑΤΑ (ΦΙΛΟΣΟΦΙΚΑ - ΑΓΡΙΝΙ) -->
       <div v-if="currentView === 'tributes'" class="page-container">
-        <h1 class="greek-title">Τί ἐστιν ἀλήθεια;</h1>
+        <h1 class="greek-title">Τί ἐστιν ἀλήθεια;</h1>
         <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import Menu from "./components/Menu.vue"
 import Title from "./components/Home.vue"
 import ArticleCard from "./components/ArticleCard.vue"
@@ -65,6 +65,26 @@ import { theatricoData } from './data/theatrico'
 
 const currentView = ref('home')
 const selectedArticle = ref<any>(null)
+
+// ΑΛΛΑΓΗ BRAND COLOR ΣΕ ΟΛΟ ΤΟ BODY DYNAMICALLY
+const updateThemeColor = (view: string) => {
+  if (view === 'tributes') {
+    // Όταν είμαστε στα φιλοσοφικά -> ΛΙΛΑ σε όλο το site
+    document.documentElement.style.setProperty('--brand-color', '#c8a2c8')
+  } else {
+    // Σε όλες τις άλλες σελίδες -> ΠΡΑΣΙΝΟ (το αρχικό)
+    document.documentElement.style.setProperty('--brand-color', 'rgb(197, 224, 174)')
+  }
+}
+
+// Παρακολουθούμε την αλλαγή του view
+watch(currentView, (newView) => {
+  updateThemeColor(newView)
+})
+
+onMounted(() => {
+  updateThemeColor(currentView.value)
+})
 
 const changeView = (viewName: string) => {
   currentView.value = viewName
