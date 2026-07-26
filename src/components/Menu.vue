@@ -11,7 +11,7 @@
     <div class="right-menu">
       <el-menu-item index="articles">Ιατρικά</el-menu-item>
       <el-menu-item index="tributes">Φιλοσοφικά</el-menu-item>
-      <el-menu-item index="theater">Θεατρικά</el-menu-item> 
+     
     </div>
   </el-menu>
 

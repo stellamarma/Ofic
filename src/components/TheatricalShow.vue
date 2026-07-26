@@ -87,6 +87,10 @@ const prevPage = () => {
         <p class="meta">
           <strong>Κατηγορία:</strong> {{ show.category }} | 
           <strong>Συγγραφέας:</strong> {{ show.author }}
+          
+        </p>
+        <p class="meta">
+          <strong>SN:  </strong> 9786188854703
         </p>
       </header>
 
