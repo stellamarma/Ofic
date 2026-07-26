@@ -6,12 +6,21 @@
     :ellipsis="false"
     @select="handleSelect"
   >
-    <el-menu-item index="home" class="logo-item">ΟΦΙC</el-menu-item>
+    <el-menu-item index="home" class="logo-item">
+      <span>ΟΦΙC</span>
+
+      <!-- Container για το κείμενο "Visitors" και τον μετρητή δίπλα-δίπλα -->
+      <div class="counter-container">
+        <span class="visitors-text">Visitors:</span>
+        <a href="https://www.counter12.com" target="_blank" rel="noopener" @click.stop>
+          <img src="https://www.counter12.com/img-1Y4w19wWW4acBA9C-15.gif" border="0" alt="web counter free" />
+        </a>
+      </div>
+    </el-menu-item>
 
     <div class="right-menu">
       <el-menu-item index="articles">Ιατρικά</el-menu-item>
       <el-menu-item index="tributes">Φιλοσοφικά</el-menu-item>
-     
     </div>
   </el-menu>
 
@@ -42,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const activeIndex = ref('home')
 const drawer = ref(false)
@@ -58,6 +67,14 @@ const handleMobileSelect = (key: string) => {
   handleSelect(key)
   drawer.value = false 
 }
+
+// Δυναμική φόρτωση του script για να αποφευχθεί το error στο Vue
+onMounted(() => {
+  const script = document.createElement('script')
+  script.src = 'https://www.counter12.com/ad.js?id=1Y4w19wWW4acBA9C'
+  script.async = true
+  document.body.appendChild(script)
+})
 </script>
 
 <style scoped>
@@ -69,21 +86,19 @@ const handleMobileSelect = (key: string) => {
 }
 
 /* --- ΑΛΛΑΓΗ ΧΡΩΜΑΤΟΣ ΓΙΑ ELEMENT PLUS --- */
-/* Εδώ αλλάζουμε το φόντο στο desktop μενού και στα κουμπιά του */
 .el-menu-demo {
   display: flex;
   align-items: center;
   --el-menu-item-font-size: 25px; 
   --el-menu-item-height: 70px;    
   --el-menu-sub-item-height: 60px; 
-  background-color: var(--brand-color) !important; /* Φόντο Desktop Μενού */
+  background-color: var(--brand-color) !important;
 }
 
 .el-menu-demo .el-menu-item {
-  background-color: transparent !important; /* Για να μην έχουν λευκό background τα κουμπιά */
+  background-color: transparent !important;
 }
 
-/* Αλλαγή φόντου στο Mobile Μπαράκι */
 .mobile-menu-bar {
   display: none;
   justify-content: space-between;
@@ -91,10 +106,9 @@ const handleMobileSelect = (key: string) => {
   padding: 0 20px;
   height: 60px;
   border-bottom: 1px solid var(--el-border-color-light);
-  background-color: var(--brand-color) !important; /* Φόντο Mobile Bar */
+  background-color: var(--brand-color) !important;
 }
 
-/* Αλλαγή φόντου στο Mobile Drawer (το πλαϊνό που ανοίγει) */
 :deep(.el-drawer) {
   background-color: var(--brand-color) !important;
 }
@@ -104,9 +118,8 @@ const handleMobileSelect = (key: string) => {
 :deep(.el-drawer) .el-menu-item {
   background-color: transparent !important;
 }
-/* ---------------------------------------- */
 
-/* 1. Εδώ ΕΞΑΝΑΓΚΑΖΟΥΜΕ το δεξί μενού να έχει ΚΑΝΟΝΙΚΗ γραμματοσειρά */
+/* Δεξί μενού με κανονική γραμματοσειρά */
 .right-menu, 
 .right-menu .el-menu-item {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
@@ -118,19 +131,44 @@ const handleMobileSelect = (key: string) => {
   align-items: center;
 }
 
-/* 2. Εφαρμογή ΜΟΝΟ στο desktop λογότυπο ΟΦΙC */
+/* Desktop λογότυπο ΟΦΙC */
 .logo-item {
   font-family: 'GFS Jackson', serif !important;
   font-size: 28px !important; 
   font-weight: bold;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+/* Container για το κείμενο Visitors & τον μετρητή */
+.counter-container {
+  display: inline-flex;
+  align-items: center; /* Ακριβής ευθυγράμμιση στον οριζόντιο άξονα */
+  gap: 6px; /* Απόσταση ανάμεσα στο 'Visitors:' και στην εικόνα */
+  margin-left: 15px; /* Απόσταση από το 'ΟΦΙC' */
+}
+
+/* Στυλ για τη λέξη Visitors */
+.visitors-text {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-size: 14px;
+  font-weight: normal;
+  color: #333333;
+  line-height: 1;
+}
+
+/* Ευθυγράμμιση της εικόνας του μετρητή */
+.counter-container img {
+  display: block;
+  vertical-align: middle;
 }
 
 :deep(.el-sub-menu__title) {
   font-size: 20px !important; 
 }
 
-/* 3. Εφαρμογή ΜΟΝΟ στο mobile λογότυπο ΟΦΙC */
+/* Mobile λογότυπο ΟΦΙC */
 .mobile-logo {
   font-family: 'GFS Jackson', serif !important;
   font-size: 26px;
@@ -138,7 +176,6 @@ const handleMobileSelect = (key: string) => {
   cursor: pointer;
 }
 
-/* 4. Εξαναγκασμός κανονικής γραμματοσειράς και για το μενού μέσα στο Mobile Drawer */
 :deep(.el-drawer__body) .el-menu-item {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   font-size: 20px;

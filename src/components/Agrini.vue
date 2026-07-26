@@ -19,7 +19,7 @@
     <p class="interactive-text">
       Πατήστε
       <span class="clickable-word" @click="openPopup">ΕΔΩ</span>
-      για να μεταβείτε στο θεατρικό.
+      για να δείτε την αντίδραση του Πιλάτου, όχι του Πόντιου, αλλά αυτού του ομώνυμου θεατρικού έργου.
     </p>
 
     <!-- Popup (Modal) -->
