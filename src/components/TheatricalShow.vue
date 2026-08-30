@@ -90,7 +90,7 @@ const prevPage = () => {
           
         </p>
         <p class="meta">
-          <strong>SN:  </strong> 9786188854703
+          <strong> ISBN:  </strong> 9786188854703
         </p>
       </header>
 
