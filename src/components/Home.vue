@@ -6,7 +6,11 @@
     <!-- Το Ρητό του Ιπποκράτη -->
     <div class="poem-container">
       <div class="poem-quote">«Ωφελέειν, μη βλάπτειν»</div>
+      <div class="poem-quote">«Ιατρός γαρ φιλόσοφος ισόθεος»</div>
+       <div class="poem-quote">«Ο βίος βραχύς,  η δε τέχνη μακρή, ο δε καιρός  οξύς, η δε πείρα σφαλερή, η δε κρίσις χαλεπή»</div>
       <span class="poem-author">— Ιπποκράτης</span>
+            <div class="poem-quote">«Η ΑΠΟΓΝΩΣΗ μπορεί να οδηγήσει σε ανώτερο βαθμό αυτογνωσίας»</div>
+            <span class="poem-author">— ΟΦΙC</span>
     </div>
 
 

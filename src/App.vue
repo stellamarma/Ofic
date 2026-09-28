@@ -37,7 +37,7 @@
 
       <!-- ΑΦΙΕΡΩΜΑΤΑ (ΦΙΛΟΣΟΦΙΚΑ - ΑΓΡΙΝΙ) -->
       <div v-if="currentView === 'tributes'" class="page-container">
-        <h1 class="greek-title">Τί ἐστιν ἀλήθεια;</h1>
+        <h1 class="greek-title">Τί ἐστίν ἀλήθεια;</h1>
         <Agrini @redirect-to-theater="handleRedirect" />
       </div>
 
